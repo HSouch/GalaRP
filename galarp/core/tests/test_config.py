@@ -1,4 +1,4 @@
-from .. import config
+from ..core import config
 from configobj.validate import Validator
 
 
