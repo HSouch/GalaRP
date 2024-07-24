@@ -1,5 +1,5 @@
-from ...utils import get_orbit_data
-from ...rampressure import OrbitContainer
+from ...core.utils import get_orbit_data
+from ...core.rampressure import OrbitContainer
 
 
 import numpy as np

@@ -6,7 +6,7 @@ from scipy.interpolate import interp1d
 
 from . import densities, utils
 
-from .postprocessing import analysis
+from ..postprocessing import analysis
 
 from gala.units import galactic
 

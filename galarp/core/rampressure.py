@@ -6,11 +6,11 @@ import pickle
 import astropy.units as u
 import numpy as np
 
-from .postprocessing import utils
+from ..postprocessing import utils
 
 # This module
 from . import shadows, winds, densities
-from .satellites import particles as sat_particles
+from ..satellites import particles as sat_particles
 
 import gala.dynamics as gd
 from gala.units import galactic

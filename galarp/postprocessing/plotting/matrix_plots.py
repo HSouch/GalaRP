@@ -2,7 +2,7 @@
 from ..analysis import calculate_rstrip
 
 from ..utils import ellipse_coords
-from ...utils import get_orbit_data
+from ...core.utils import get_orbit_data
 
 
 import numpy as np

@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from ..postprocessing.plotting import general_plots
 import gala.dynamics as gd
 from gala.units import galactic
-from .. import utils
+from . import utils
 
 
 from tqdm import tqdm

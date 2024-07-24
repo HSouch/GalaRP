@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 from gala.units import galactic
 from astropy import units as u
 
-from ..winds import InterpolatedStrengthWind
+from ..core.winds import InterpolatedStrengthWind
 
 
 

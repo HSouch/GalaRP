@@ -2,11 +2,13 @@ from astropy import units as u
 from gala.units import galactic
 import numpy as np
 
-from ..utils import gen_mass_profile
+from ..core.utils import gen_mass_profile
 
-from .. import builtins, particles
+from . import satellites
+from ..satellites import particles
 
-from .. import winds, shadows, rampressure
+
+from ..core import winds, shadows, rampressure
 
 
 __all__ = ['ExampleUniformEvent', 'ExampleLorentzianEvent']

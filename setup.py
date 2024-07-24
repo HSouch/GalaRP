@@ -35,7 +35,7 @@ setup(
     keywords='galaxies, gravity, gravitational potentials',
     install_requires=[
         "astropy>=6.0.0",
-        "gala>=1.8.1",
+        "gala",
         "k3d>=2.16.1",
         "matplotlib>=3.8.3",
         "numpy>=1.26.4",

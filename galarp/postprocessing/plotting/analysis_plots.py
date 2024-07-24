@@ -8,8 +8,8 @@ from scipy import stats
 
 from .. import analysis
 
-from ...utils import get_orbit_data
-from ...rampressure import OrbitContainer
+from ...core.utils import get_orbit_data
+from ...core.rampressure import OrbitContainer
 
 
 def rstrip_plot(orbits, zmax=2 * u.kpc, rstrip_frac = 0.8, rmax=20 * u.kpc, 
