@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "galarp"
+
+dynamic=["version"]
+
+description = "A project for predicting the non-hydro dominated effects of a ram pressure interaction."
+authors = [
+    { name = "Harrison Souchereau", email = "harrison.souchereau@yale.edu" }
+]
+license = { text = "MIT" }
+
+dependencies = [
+    "astropy>=6.0.0",
+    "gala",
+    "k3d>=2.16.1",
+    "matplotlib>=3.8.3",
+    "numpy>=1.26.4",
+    "scipy>=1.13.0",
+    "tqdm>=4.66.1",
+    "ruff",
+    "tox",
+]
+
+
+[tool.setuptools]
+packages = ["galarp"]

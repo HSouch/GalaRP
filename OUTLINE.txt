@@ -1,0 +1,19 @@
+CORE (Handle sim pipeline and primary physics of the package)
+    sim.py (run the main simulation pipeline)
+
+    PHYSICS
+        shadowing.py 
+
+
+
+OBJECTS
+    STATIC OBJECTS 
+        
+        WINDS
+        DENSITIES
+        
+        CLOUDS
+            (Mass, radius)
+
+
+

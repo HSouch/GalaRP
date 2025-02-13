@@ -1,0 +1,54 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Build directories
+dist/
+build/
+tmp/
+temp/
+
+# Coverage directory
+coverage/
+
+# Miscellaneous
+*.bak
+*.tmp
+*.old
+*.swp
+*.swo
+*.orig
+*.rej
+*.patch
+*.un~
+*.egg-info
+.tox
+
+# Personal Directories
+self-notebooks/
