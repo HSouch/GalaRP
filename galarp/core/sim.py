@@ -26,33 +26,30 @@ def F_RPS(t, particles, potential, wind, rho, shadow, **kwargs):
         a_ram *= np.sign(v_rel)
         a_ram = a_ram.T
     
-        if kwargs.get("shadow_on", True):
-            damping = shadow.evaluate(t, q, particles.sigms_gas).T
-            a_ram *= damping
+        # if kwargs.get("shadow_on", True):
+        #     damping = shadow.evaluate(t, q, particles.sigms_gas).T
+        #     a_ram *= damping
 
         acc += a_ram
     
     return np.vstack((p.T, acc))
     
-
-
-def assign_default(param, default):
-    # Assign default parameters to RPSim class if needed
-    return default if param is None else param
-
-
+    
 class RPSim:
     def __init__(self, 
                  satellite_potential=builtins.satpots.JZ2023_Satellite(), 
                  particles=components.particles.ExponentialParticleSet(8, 0.5), 
                  wind=builtins.winds.BasicClusterWind(), 
+                 rho_icm=(1e-26 * u.g/u.cm**3),
                  method=F_RPS, 
                  units=galactic, 
                  **kwargs):
         self.satellite_potential = satellite_potential
         self.particles = particles
         self.wind = wind
-        self.method = assign_default(method, F_RPS)
+        self.rho_icm = rho_icm
+        self.method = method
+
         
         self.units = units
 
