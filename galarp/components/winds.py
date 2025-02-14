@@ -11,7 +11,7 @@ from .base import Iterator
 
 class Wind(Iterator):
     
-    def __init__(self, strength=500, disk_wind_angle=None,  units=galactic):
+    def __init__(self, strength=500, disk_wind_angle=None, units=galactic):
         super().__init__(units=units, name="RPWind")
         self.disk_wind_angle = disk_wind_angle
 
@@ -22,10 +22,9 @@ class Wind(Iterator):
 
 class ConstantWind(Wind):
     def __init__(self, units=galactic, disk_wind_angle = 0, strength=500  * u.km/u.s):
-        super().__init__(disk_wind_angle, units=units)
+        super().__init__(strength=strength, disk_wind_angle=disk_wind_angle, units=units)
         
         self.strength = (strength.to(units["length"]/units["time"])).value
-
 
     def evaluate(self, t):
         return self.unit_vector(t) * self.strength
@@ -54,5 +53,7 @@ class ConstantDensity(Density):
     def __init__(self, density=1e-26 * u.g/u.cm**3, units=galactic):
         super().__init__(units=units)
         
+        self.original_units = density.unit
+        
         self.density = (density.to(units["mass"]/units["length"]**3)).value
-
+    
