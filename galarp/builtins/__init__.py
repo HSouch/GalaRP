@@ -1,3 +1,3 @@
 from . import satellite_potentials as satpots
-from . import winds as winds
+from . import host_winds as host_winds
 
