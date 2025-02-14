@@ -3,9 +3,6 @@ import numpy as np
 import os
 
 
-
-
-
 def gen_exponential_distribution(pcount, h_R, h_z):
 
     try:
@@ -39,7 +36,6 @@ def _gen_exponential_distribution_ctypes(pcount, h_R, h_z):
 
     R = np.ctypeslib.as_array(particles.contents.R, shape=(count,))
     z = np.ctypeslib.as_array(particles.contents.z, shape=(count,))
-
 
     print("Number of particles:", count)
     print("First 5 R-coordinates:", R[:5])
