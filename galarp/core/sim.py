@@ -26,9 +26,9 @@ def F_RPS(t, particles, potential, wind, rho, shadow, **kwargs):
         a_ram *= np.sign(v_rel)
         a_ram = a_ram.T
     
-        # if kwargs.get("shadow_on", True):
-        #     damping = shadow.evaluate(t, q, particles.sigms_gas).T
-        #     a_ram *= damping
+        if kwargs.get("shadow_on", True) and shadow is not None:
+            damping = shadow.evaluate(t, q, particles.sigms_gas).T
+            a_ram *= damping
 
         acc += a_ram
     
@@ -39,8 +39,9 @@ class RPSim:
     def __init__(self, 
                  satellite_potential=builtins.satpots.JZ2023_Satellite(), 
                  particles=components.particles.ExponentialParticleSet(8, 0.5), 
-                 wind=builtins.winds.BasicClusterWind(), 
+                 wind=builtins.host_winds.BasicClusterWind(), 
                  rho_icm=(1e-26 * u.g/u.cm**3),
+                 shadow=None,
                  method=F_RPS, 
                  units=galactic, 
                  **kwargs):
@@ -48,6 +49,9 @@ class RPSim:
         self.particles = particles
         self.wind = wind
         self.rho_icm = rho_icm
+
+        self.shadow = shadow
+
         self.method = method
 
         
