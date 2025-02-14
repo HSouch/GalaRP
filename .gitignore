@@ -36,6 +36,7 @@ temp/
 
 __pycache__/
 
+
 # Coverage directory
 coverage/
 
@@ -51,6 +52,9 @@ coverage/
 *.un~
 *.egg-info
 .tox
+
+.pytest_cache/
+.ruff_cache/
 
 # Personal Directories
 self-notebooks/
