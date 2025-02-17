@@ -17,3 +17,15 @@ class OrbitContainer:
         x, y, z = pos.xyz.value
         vx, vy, vz = vel.d_xyz.value
 
+        if transposed:
+            x, y, z = x.T, y.T, z.T
+            vx, vy, vz = vx.T, vy.T, vz.T
+
+        return x, y, z, vx, vy, vz
+
+
+    def get_times(self):
+        return self.data.t.value
+    
+
+    
