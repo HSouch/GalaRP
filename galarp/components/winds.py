@@ -57,3 +57,6 @@ class ConstantDensity(Density):
         
         self.density = (density.to(units["mass"]/units["length"]**3)).value
     
+    def evaluate(self, t):
+        return self.density
+    
