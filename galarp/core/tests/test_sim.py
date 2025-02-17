@@ -1,5 +1,6 @@
 
 from ..sim import RPSim
+from ..outputs import OrbitContainer
 
 
 
@@ -14,6 +15,7 @@ def test_simple_run():
     results = sim.run()
 
     assert results is not None
+    assert isinstance(results, OrbitContainer)
 
 
 def test_defaults():
@@ -22,3 +24,6 @@ def test_defaults():
 
     assert sim.satellite_potential is not None
     assert sim.units is not None
+    assert sim.particles is not None
+    assert sim.wind is not None
+    assert sim.rho_icm is not None
