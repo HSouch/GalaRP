@@ -21,13 +21,16 @@ class Wind(Iterator):
 
 
 class ConstantWind(Wind):
-    def __init__(self, units=galactic, disk_wind_angle = 0, strength=500  * u.km/u.s):
+    def __init__(self, units=galactic, disk_wind_angle = 0., strength=500  * u.km/u.s):
         super().__init__(strength=strength, disk_wind_angle=disk_wind_angle, units=units)
         
         self.strength = (strength.to(units["length"]/units["time"])).value
 
     def evaluate(self, t):
-        return self.unit_vector(t) * self.strength
+        if isinstance(t, np.ndarray):
+            return np.array([self.unit_vector(t_) * self.strength for t_ in t])
+        else:
+            return self.unit_vector(t) * self.strength
 
     
 class InterpolatedWind(Wind):
