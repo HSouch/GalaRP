@@ -88,7 +88,11 @@ class RPSim:
             gd.combine(self.particles.container), dt=dt, t1=0, t2=integration_time
         )
 
-        output_metadata = {}
+        output_metadata = {"WIND": self.wind,
+                           "POTENTIAL": self.satellite_potential,
+                           "RHO_ICM": self.rho_icm,
+                           "SHADOW": self.shadow,
+                           }
 
         return OrbitContainer(data=orbits, 
                               units=self.units,
