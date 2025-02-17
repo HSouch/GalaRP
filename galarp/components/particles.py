@@ -1,18 +1,36 @@
+from astropy import units as u
 from gala.units import galactic
+from gala import dynamics as gd
 from .particle_seeder import gen_exponential_distribution
 
 import numpy as np
 
 class ParticleSet:
 
-    def __init__(self, positions=None, velocities=None, masses=None, radii=None, units=galactic):
+    def __init__(self, positions=None, velocities=None, 
+                 masses=5e4 * u.Msun, 
+                 radii=40 * u.pc, 
+                 units=galactic):
+        self.container = []
+        
+        # These are initial positions and velocities
         self.positions = positions
         self.velocities = velocities
 
-        self.masses = masses
-        self.radii = radii
+        self.original_mass_units = masses.unit
+        self.original_radius_units = radii.unit
+
+        self.masses = masses.to(units["mass"]).value
+        self.radii = radii.to(units["length"]).value
+
+        self.sigma_gas = self.masses / (np.pi * self.radii ** 2)
     
         self.units = units
+        
+    
+    def phase_space_positions(self):
+        return gd.PhaseSpacePosition(pos=self.positions , 
+                                    vel=self.velocities )
 
 
     def seed(self):
@@ -37,8 +55,8 @@ class ParticleSet:
         return velocities
     
     
-    def sigma_gas(self):
-        return self.masses / (np.pi * self.radii ** 2)
+    def surface_density(self):
+        return self.sigma_gas
     
 
     def save(self, set, fn):
@@ -48,11 +66,11 @@ class ParticleSet:
         np.save(self, np.array([x,y,z,vx,vy,vz]))
 
     @staticmethod
-    def from_file(fn):
+    def from_file(fn, units=galactic):
         data = np.load(fn)
         x, y, z, vx, vy, vz = data
 
-        return ParticleSet(positions=[x,y,z], velocities=[vx,vy,vz])
+        return ParticleSet(positions=[x,y,z], velocities=[vx,vy,vz], units=units)
 
 
 
@@ -76,4 +94,5 @@ class ExponentialParticleSet(ParticleSet):
         self.positions = np.stack([x, y, z])
         self.gen_velocities(potential, **kwargs)
 
+        
     
