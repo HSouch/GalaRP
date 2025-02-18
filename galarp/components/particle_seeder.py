@@ -5,6 +5,10 @@ import os
 
 def gen_exponential_distribution(pcount, h_R, h_z):
 
+    # TODO - Change this back once the C++ code is working properly
+    return _gen_exponential_distribution_numpy(pcount, h_R, h_z)
+
+
     try:
         return _gen_exponential_distribution_ctypes(pcount, h_R, h_z)
     
