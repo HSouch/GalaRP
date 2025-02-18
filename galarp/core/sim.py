@@ -11,7 +11,7 @@ from gala.units import galactic
 
 
 
-def F_RPS(t, w, particles, potential, wind, rho, shadow, kwargs):
+def F_RPS(t, w, particles, potential, wind, rho_icm, shadow, kwargs):
     units = kwargs.get("units", galactic)
     x, y, z, vx, vy, vz = w
     q = np.stack([x, y, z], axis=1)
@@ -23,8 +23,7 @@ def F_RPS(t, w, particles, potential, wind, rho, shadow, kwargs):
     # Apply Ram Pressure Wind
     if kwargs.get("wind_on", True):
         v_rel = wind.evaluate(t) - p
-        a_ram = (v_rel ** 2) * (rho.evaluate(t) / particles.surface_density())# [:, np.newaxis]
-        a_ram *= np.sign(v_rel)
+        a_ram = (v_rel ** 2) * (rho_icm.evaluate(t) / particles.surface_density()) * np.sign(v_rel) # [:, np.newaxis]
         a_ram = a_ram.T
     
         if kwargs.get("shadow_on", True) and shadow is not None:
@@ -32,10 +31,6 @@ def F_RPS(t, w, particles, potential, wind, rho, shadow, kwargs):
             a_ram *= damping
 
         acc += a_ram
-
-    # Apply shadowing
-    if kwargs.get("shadow_on", True) and shadow is not None:
-        acc *= shadow.evaluate(t, q, particles.sigma_gas)
     
     return np.vstack((p.T, acc))
     
