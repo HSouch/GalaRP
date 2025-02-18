@@ -19,3 +19,23 @@ def ellipse_coords(x, y, a, b, theta, num_points=100, b_is_ellipticity=False):
     z_coords = np.zeros(num_points)
     # Return the sampled coordinates as a NumPy array
     return x_coords, y_coords, z_coords
+
+
+class UnitSet:
+    """
+        A helpful handler for storing the unitsystem (for unit conversion later)
+    """
+    def __init__(self, unitsystem):
+        self.unitsystem = unitsystem
+
+        self.mass = unitsystem["mass"]
+        self.length = unitsystem["length"]
+        self.time = unitsystem["time"]
+
+        self.velocity = unitsystem["length"] / unitsystem["time"]
+        self.acceleration = unitsystem["length"] / unitsystem["time"] ** 2
+        
+        self.density = unitsystem["mass"] / unitsystem["length"] ** 3
+        self.surface_density = unitsystem["mass"] / unitsystem["length"] ** 2
+
+        self.ram_pressure = unitsystem["mass"] / unitsystem["length"] / unitsystem["time"] ** 2
