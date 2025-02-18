@@ -1,7 +1,11 @@
+from astropy import constants as c
 from astropy import units as u
+
 from gala.units import galactic
 from gala import dynamics as gd
 from .particle_seeder import gen_exponential_distribution
+
+from ..utils import UnitSet
 
 import numpy as np
 
@@ -26,44 +30,43 @@ class ParticleSet:
         self.sigma_gas = self.masses / (np.pi * self.radii ** 2)
     
         self.units = units
+        self.unitset = UnitSet(self.units)
         
     
     def phase_space_positions(self):
         return gd.PhaseSpacePosition(pos=self.positions , 
                                     vel=self.velocities )
 
-
     def seed(self):
         raise NotImplementedError
     
-
-    def gen_velocities(self, pot, rotation=1):
+    def gen_velocities(self, potential, rotation=1):
+        # Generate velocities using the enclosed mass of the potential
+        xs, ys, zs = self.positions
+        rs = np.sqrt(xs**2 + ys**2 + zs**2) * self.unitset.length
+        theta = np.arctan2(ys, xs)
+        incs = np.arctan2(zs, np.sqrt(xs**2 + ys**2))
         
-        vtot = pot.energy(self.positions)
+        m_encs = potential.mass_enclosed([xs, ys, zs])
 
-        px, py, pz = self.positions
-        theta = np.arctan2(py, px)
-        incs = np.arctan2(pz, np.sqrt(px ** 2 + py ** 2))
-
-        vx = -vtot * np.sin(theta) * rotation
-        vy = vtot * np.cos(theta) * rotation
+        v_circ = np.sqrt(c.G * m_encs / rs).to(self.unitset.velocity).value
+        
+        vx = -np.sin(theta) * v_circ * rotation
+        vy = np.cos(theta) * v_circ * rotation
         vz = np.sqrt(vx ** 2 + vy ** 2) * np.sin(incs)
 
         self.velocities = np.array([vx, vy, vz])
-        
-        velocities = None
-        return velocities
-    
-    
+
+
     def surface_density(self):
         return self.sigma_gas
     
 
-    def save(self, set, fn):
+    def save(self, fn):
         x,y,z = self.positions
         vx, vy, vz = self.velocities
 
-        np.save(self, np.array([x,y,z,vx,vy,vz]))
+        np.save(fn, [x,y,z,vx,vy,vz])
 
     @staticmethod
     def from_file(fn, units=galactic):
