@@ -4,7 +4,7 @@ from astropy import units as u
 
 
 def BasicClusterWind():
-    return winds.ConstantWind(strength=500 * u.km/u.s, disk_wind_angle=0.)
+    return winds.ConstantWind(strength=300 * u.km/u.s, disk_wind_angle=0.)
 
 
 def BasicClusterDensity():
