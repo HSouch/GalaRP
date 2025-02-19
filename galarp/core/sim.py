@@ -38,7 +38,7 @@ def F_RPS(t, w, particles, potential, wind, rho_icm, shadow, kwargs):
 class RPSim:
     def __init__(self, 
                  satellite_potential=builtins.satpots.JZ2023_Satellite(), 
-                 particles=components.particles.ExponentialParticleSet(8, 0.5), 
+                 particles=builtins.particles.HighResUniformGrid(), 
                  wind=builtins.host_winds.BasicClusterWind(), 
                  rho_icm=builtins.host_winds.BasicClusterDensity(),
                  shadow=None,
@@ -58,7 +58,7 @@ class RPSim:
 
         # Make sure we actually have particles to simulate
         if particles.positions is None:
-            self.particles.seed(5000, self.satellite_potential)
+            self.particles.seed(self.satellite_potential, Nparticles=5000)
 
 
     def ensure_common_units(self):
