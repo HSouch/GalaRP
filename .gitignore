@@ -39,6 +39,7 @@ __pycache__/
 
 # Coverage directory
 coverage/
+.coverage
 
 # Miscellaneous
 *.bak
