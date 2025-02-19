@@ -6,7 +6,7 @@ def k3d_plot(
     orbit_containers,
     bgcolor=0,
     particle_color=0xFFFFFF,
-    outname="test_out/orbits.html",
+    outname=None,
     duration=20,
     transpose=False,
     size=0.1,
@@ -67,5 +67,6 @@ def k3d_plot(
 
     plot.display()
 
-    with open(outname, "w") as fp:
-        fp.write(plot.get_snapshot())
+    if outname is not None:
+        with open(outname, "w") as fp:
+            fp.write(plot.get_snapshot())
