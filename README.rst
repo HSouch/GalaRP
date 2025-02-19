@@ -1,6 +1,7 @@
 
 GalaRP (`Gala <http://gala.adrian.pw/en/latest/>`_ + RP) is an analytical framework for gaseous 
-evolution under ram pressure.
+evolution under ram pressure. Companion notebooks can be found at 
+`this repository <https://github.com/HSouch/galarp_notebooks/>`_
 
 |logo| 
 
