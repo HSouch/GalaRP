@@ -92,3 +92,12 @@ class RPSim:
         return OrbitContainer(data=orbits, 
                               units=self.units,
                               metadata=output_metadata)
+
+
+    def info(self):
+        print("Galarp Simulation with:")
+        print(f"  {self.particles}  ")
+        print(f"  {self.rho_icm}  ")
+        print(f"  {self.wind}  ")
+        print(f"  {self.satellite_potential}  ")
+    
