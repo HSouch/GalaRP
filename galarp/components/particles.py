@@ -40,7 +40,7 @@ class ParticleSet:
     def seed(self):
         raise NotImplementedError
     
-    def gen_velocities(self, potential, rotation=1):
+    def gen_velocities(self, potential, rotation=1, **kwargs):
         # Generate velocities using the enclosed mass of the potential
         xs, ys, zs = self.positions
         rs = np.sqrt(xs**2 + ys**2 + zs**2) * self.unitset.length
@@ -77,18 +77,58 @@ class ParticleSet:
 
 
 
+class UniformGridParticleSet(ParticleSet):
+
+    def __init__(self, Rmax = 10 * u.kpc, spacing = 0.5 * u.kpc, 
+                 disp_R = 0 * u.km / u.s, disp_z = 0 * u.km/u.s,  
+                 units=galactic, **kwargs):
+        super().__init__(units=units, **kwargs)
+        
+        self.Rmax = Rmax.to(units["length"]).value
+        self.spacing = spacing.to(units["length"]).value
+
+        self.disp_R = disp_R.to(self.unitset.velocity).value    
+        self.disp_z = disp_z.to(self.unitset.velocity).value
+
+    def seed(self, potential, **kwargs):
+        xs, ys = np.meshgrid(np.arange(-self.Rmax, self.Rmax, self.spacing),
+                             np.arange(-self.Rmax, self.Rmax, self.spacing))
+        xs = xs.flatten()
+        ys = ys.flatten()
+
+        # Remove particles outside of Rmax
+        rs = np.sqrt(xs**2 + ys**2)
+        mask = rs <= self.Rmax
+        xs = xs[mask]
+        ys = ys[mask]
+
+        zs = np.zeros_like(xs)
+
+        self.positions = np.vstack((xs, ys, zs))
+
+        self.gen_velocities(potential, **kwargs)
+
+        # Add velocity dispersion to the disk if requested
+        self.velocities[0] += np.random.normal(0, self.disp_R, self.velocities.shape[1])
+        self.velocities[1] += np.random.normal(0, self.disp_R, self.velocities.shape[1])
+        self.velocities[2] += np.random.normal(0, self.disp_z, self.velocities.shape[1])
+
+
+
 class ExponentialParticleSet(ParticleSet):
 
-    def __init__(self, scale_length, scale_height, **kwargs):
+    def __init__(self, Nparticles, scale_length, scale_height, units=galactic, **kwargs):
+        self.Nparticles = Nparticles
+
         self.scale_height = scale_height
         self.scale_length = scale_length
 
         self.n_0 = 1 / (4 * np.pi * scale_length**2 * scale_height)
 
-        super().__init__(**kwargs)
+        super().__init__(units=units, **kwargs)
     
-    def seed(self, Nparticles, potential, **kwargs):
-        R, z = gen_exponential_distribution(Nparticles, self.scale_length, self.scale_height)
+    def seed(self, potential, **kwargs):
+        R, z = gen_exponential_distribution(self.Nparticles, self.scale_length, self.scale_height)
         phi = np.random.uniform(0, 2*np.pi, len(R))
 
         x = R * np.cos(phi)
