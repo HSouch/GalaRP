@@ -39,3 +39,6 @@ class UnitSet:
         self.surface_density = unitsystem["mass"] / unitsystem["length"] ** 2
 
         self.ram_pressure = unitsystem["mass"] / unitsystem["length"] / unitsystem["time"] ** 2
+
+        self.energy = unitsystem["mass"] * unitsystem["length"] ** 2 / unitsystem["time"] ** 2
+        
