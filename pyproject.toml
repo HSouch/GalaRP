@@ -4,8 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "galarp"
-
-dynamic=["version"]
+version = "1.0.1"
 
 description = "A project for predicting the non-hydro dominated effects of a ram pressure interaction."
 authors = [
