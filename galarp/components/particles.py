@@ -17,7 +17,7 @@ class ParticleSet:
                  units=galactic):
         self.container = []
         
-        # These are initial positions and velocities
+        # Initial positions and velocities
         self.positions = positions
         self.velocities = velocities
 
@@ -40,6 +40,7 @@ class ParticleSet:
     def seed(self):
         raise NotImplementedError
     
+
     def gen_velocities(self, potential, rotation=1, **kwargs):
         # Generate velocities using the enclosed mass of the potential
         xs, ys, zs = self.positions
