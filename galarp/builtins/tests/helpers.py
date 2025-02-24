@@ -11,6 +11,7 @@ class TestBuiltin:
         assert self.obj.units is not None
 
 
+
 class TestSatPotBuiltin(TestBuiltin):
     obj = None
 
@@ -30,3 +31,8 @@ class TestWindBuiltin(TestBuiltin):
     def test_evaluate(self):
         assert self.obj.evaluate(0) is not None
         assert len(self.obj.evaluate(0)) == 3
+
+
+class TestParticleSet(TestBuiltin):
+    obj = None
+
