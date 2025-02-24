@@ -1,6 +1,6 @@
 __version__ = "0.1.0"
 
-from . import builtins
+from . import builtins as builtins
 from .components import *
 from .core import *
 from .physics import *
