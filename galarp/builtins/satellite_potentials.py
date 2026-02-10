@@ -42,3 +42,14 @@ def RB2006_Satellite():
 
     return gp.CompositePotential(dm=dm, stars=stars, bulge=bulge, gas=gas)
 
+
+def HS2025_Satellite():
+    """ Satellite potential for Souchereau+2025
+    """
+
+    dm = gp.BurkertPotential(rho=4.77e-25 * u.g / u.cm**3, r0=16.42 * u.kpc, units=galactic)
+
+    stars = gp.MiyamotoNagaiPotential(m=4.89 * 10**9 * u.Msun, a=2.2 * u.kpc, b=0.5 * u.kpc, units=galactic)
+    gas = gp.MiyamotoNagaiPotential(m=4.89 * 10**9 * u.Msun, a=3.96 * u.kpc, b=0.5 * u.kpc, units=galactic)
+
+    return gp.CompositePotential(dm=dm, stars=stars, gas=gas)

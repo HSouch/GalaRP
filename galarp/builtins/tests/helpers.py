@@ -1,4 +1,5 @@
 from numpy import sqrt, sum, isclose
+from galarp import OrbitContainer
 
 class TestBuiltin:
     
@@ -36,3 +37,14 @@ class TestWindBuiltin(TestBuiltin):
 class TestParticleSet(TestBuiltin):
     obj = None
 
+
+
+class TestSim(TestBuiltin):
+    obj = None
+
+
+    def test_run(self):
+        assert self.obj.run() is not None
+        assert isinstance(self.obj.run(), OrbitContainer)
+
+    
